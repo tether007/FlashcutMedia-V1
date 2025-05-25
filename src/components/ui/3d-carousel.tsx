@@ -91,7 +91,7 @@ const videoUrls = [
   courosel_Vid2,
   courosel_Vid3,
   courosel_Vid4,
-  courosel_Vid5,
+  courosel_Vid8,
   courosel_Vid6,
   courosel_Vid7,
   courosel_Vid8,
@@ -99,7 +99,7 @@ const videoUrls = [
   courosel_Vid2,
   courosel_Vid3,
   courosel_Vid4,
-  courosel_Vid5,
+  courosel_Vid8,
   courosel_Vid7,
 ]
 // ...existing code...
