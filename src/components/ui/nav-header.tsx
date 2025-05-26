@@ -1,6 +1,6 @@
 
 "use client"; 
-
+import logo from "@/assets/images/logo.png";
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";

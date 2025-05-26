@@ -1,18 +1,18 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 
 const Logo: React.FC = () => {
   return (
     <Link to="/" className="block">
-      <div className="flex items-center">
-        <div className="relative w-40 h-24 md:w-56 md:h-32">
+      <div className="flex items-center gap-2">
+        <div className="relative flex items-center w-24 sm:w-32 md:w-40 lg:w-48">
           <img 
-            src="/lovable-uploads/9df271bd-3983-42ed-a6c2-af8d3918aee1.png" 
+            src="src/assets/images/logo.png" 
             alt="FLASHCUT MEDIA" 
-            className="w-full h-full object-contain"
+            className="w-full h-auto max-w-full object-contain"
           />
         </div>
+        {/* Optional: <span className="font-bold text-base sm:text-lg md:text-xl text-white">FLASHCUT MEDIA</span> */}
       </div>
     </Link>
   );

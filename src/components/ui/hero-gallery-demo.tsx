@@ -35,11 +35,12 @@ const HeroDemo1 = () => {
 
       <ContainerScale className="relative z-10 text-center">
         <h1 className="max-w-xl text-5xl font-bold tracking-tighter text-slate-800 dark:text-white">
-          About Our Studio
+          About Our Company
         </h1>
         <p className="my-6 max-w-xl text-sm text-slate-700 dark:text-slate-300 md:text-base">
-          Founded in 2023, our creative studio brings together experts in software development, 
-          UX/UI design, and creative direction to push the boundaries of digital experiences.
+          Founded in 2025, our creative studio brings together experts in video production,
+          photography, and digital content creation. We specialize in crafting compelling narratives 
+          
         </p>
         <div className="flex items-center justify-center gap-4">
           <Button className="bg-primary px-4 py-2 font-medium hover:bg-primary/80">

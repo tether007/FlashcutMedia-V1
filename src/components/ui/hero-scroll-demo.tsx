@@ -19,7 +19,7 @@ export function HeroScrollDemo() {
         }
       >
         <img
-          src="https://ui.aceternity.com/_next/image?url=%2Flinear.webp&w=3840&q=75"
+          src="src\assets\images\insta_contact.png"
           alt="hero"
           className="mx-auto rounded-2xl object-cover h-full object-left-top"
           draggable={false}
