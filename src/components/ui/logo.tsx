@@ -7,7 +7,7 @@ const Logo: React.FC = () => {
       <div className="flex items-center gap-2">
         <div className="relative flex items-center w-24 sm:w-32 md:w-40 lg:w-48">
           <img 
-            src="src/assets/images/logo.png" 
+            src="\logo.png" 
             alt="FLASHCUT MEDIA" 
             className="w-full h-auto max-w-full object-contain"
           />
