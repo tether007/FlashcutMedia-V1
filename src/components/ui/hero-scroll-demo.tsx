@@ -19,7 +19,7 @@ export function HeroScrollDemo() {
         }
       >
         <img
-          src="src\assets\images\insta_contact.png"
+          src="\insta_contact.png"
           alt="hero"
           className="mx-auto rounded-2xl object-cover h-full object-left-top"
           draggable={false}

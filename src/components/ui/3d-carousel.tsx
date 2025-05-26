@@ -1,13 +1,13 @@
 
 "use client"
 
-import courosel_Vid1 from "@/assets/videos/corousel_vid1.mp4"
-import courosel_Vid2 from "@/assets/videos/corousel_vid2.mp4"
-import courosel_Vid3 from "@/assets/videos/corousel_vid3.mp4"
-import courosel_Vid4 from "@/assets/videos/corousel_vid4.mp4"
-import courosel_Vid6 from "@/assets/videos/corousel_vid6.mp4"
-import courosel_Vid7 from "@/assets/videos/corousel_vid7.mp4"
-import courosel_Vid8 from "@/assets/videos/corousel_vid8.mp4"
+import courosel_Vid1 from "\corousel_vid1.mp4"
+import courosel_Vid2 from "\corousel_vid2.mp4"
+import courosel_Vid3 from "\corousel_vid3.mp4"
+import courosel_Vid4 from "\corousel_vid4.mp4"
+import courosel_Vid6 from "\corousel_vid6.mp4"
+import courosel_Vid7 from "\corousel_vid7.mp4"
+import courosel_Vid8 from "\corousel_vid8.mp4"
 import { memo, useEffect, useLayoutEffect, useMemo, useState } from "react"
 import {
   AnimatePresence,
