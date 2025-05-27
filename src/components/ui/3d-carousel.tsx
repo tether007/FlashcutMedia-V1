@@ -66,13 +66,6 @@ const keywords = [
   "sunrise",
   "winter",
   "skyscraper",
-  "building",
-  "cityscape",
-  "architecture",
-  "street",
-  "lights",
-  "downtown",
-  "bridge",
 ]
 
 const videoUrls = [
