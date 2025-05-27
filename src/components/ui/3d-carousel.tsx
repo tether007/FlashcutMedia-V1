@@ -1,4 +1,3 @@
-
 "use client"
 
 import { memo, useEffect, useLayoutEffect, useMemo, useState } from "react"
@@ -76,8 +75,6 @@ const keywords = [
   "bridge",
 ]
 
-// Sample video URLs that will be used when clicking on images
-// ...existing code...
 const videoUrls = [
   "/videos/corousel_vid1.mp4",
   "/videos/corousel_vid2.mp4",
@@ -89,10 +86,8 @@ const videoUrls = [
   "/videos/corousel_vid8.mp4",
 ]
 
-// ...existing code...
-
 const duration = 0.15
-const transition = { duration, ease: [0.32, 0.72, 0, 1], filter: "blur(4px)" }
+const transition = { duration, ease: [0.32, 0.72, 0, 1] }
 const transitionOverlay = { duration: 0.5, ease: [0.32, 0.72, 0, 1] }
 
 const Carousel = memo(
@@ -126,7 +121,6 @@ const Carousel = memo(
         style={{
           perspective: "1000px",
           transformStyle: "preserve-3d",
-          willChange: "transform",
         }}
       >
         <motion.div
@@ -137,6 +131,7 @@ const Carousel = memo(
             rotateY: rotation,
             width: cylinderWidth,
             transformStyle: "preserve-3d",
+            willChange: "transform",
           }}
           onDrag={(_, info) =>
             isCarouselActive &&
@@ -158,7 +153,7 @@ const Carousel = memo(
         >
           {cards.map((imgUrl, i) => (
             <motion.div
-              key={`key-${imgUrl}-${i}`}
+              key={`face-${i}`}
               className="absolute flex h-full origin-center items-center justify-center rounded-xl p-2"
               style={{
                 width: `${faceWidth}px`,
@@ -168,27 +163,18 @@ const Carousel = memo(
               }}
               onClick={() => handleClick(imgUrl, i)}
             >
-              <motion.img
+              <img
                 src={imgUrl}
                 alt={`keyword_${i} ${imgUrl}`}
-                layoutId={`img-${imgUrl}`}
                 className="pointer-events-none w-full rounded-xl object-cover aspect-square"
-                initial={{ filter: "blur(4px)" }}
-                layout="position"
-                animate={{ filter: "blur(0px)" }}
-                transition={transition}
               />
             </motion.div>
           ))}
         </motion.div>
-       
       </div>
     )
   }
 )
-
-const hiddenMask = `repeating-linear-gradient(to right, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 30px, rgba(0,0,0,1) 30px, rgba(0,0,0,1) 30px)`
-const visibleMask = `repeating-linear-gradient(to right, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 0px, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 30px)`
 
 function ThreeDPhotoCarousel() {
   const [activeImg, setActiveImg] = useState<string | null>(null)
@@ -218,32 +204,29 @@ function ThreeDPhotoCarousel() {
   }
 
   return (
-    <motion.div layout className="relative">
+    <div className="relative">
       <AnimatePresence mode="sync">
         {activeImg && activeIndex !== null && (
           <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            layoutId={`img-container-${activeImg}`}
-            layout="position"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black bg-opacity-0 flex items-center justify-center z-50"             style={{ willChange: "opacity" }}
+            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
             transition={transitionOverlay}
           >
             <motion.div
               className="relative w-auto h-auto max-w-[90vw] max-h-[90vh] overflow-hidden"
               style={{ aspectRatio: "9/16" }}
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
               transition={{
-                delay: 0.2,
-                duration: 0.5,
+                duration: 0.3,
                 ease: [0.25, 0.1, 0.25, 1],
               }}
             >
-              <motion.video
-                layoutId={`video-${activeImg}`}
+              <video
                 src={videoUrls[activeIndex % videoUrls.length]}
                 className="w-full h-full object-contain rounded-xl bg-black"
                 style={{
@@ -273,7 +256,7 @@ function ThreeDPhotoCarousel() {
           videoUrls={videoUrls}
         />
       </div>
-    </motion.div>
+    </div>
   )
 }
 
