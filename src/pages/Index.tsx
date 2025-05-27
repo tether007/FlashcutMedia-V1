@@ -99,13 +99,13 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className="min-h-screen">
-      <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
-        {/* Floating images with better positioning to match your concert/event photos */}
+    <div className="min-h-screen pt-20 md:pt-0">
+      <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4">
+        {/* Floating images */}
         <FloatingImage 
           src={placeholder1} 
           alt="Concert stage" 
-          className="w-72 h-48 top-[10%] left-[5%] z-10 hidden md:block"
+          className="w-48 md:w-72 h-32 md:h-48 top-[10%] left-[5%] z-10 hidden md:block"
           sensitivity={70}
         />
         
@@ -131,9 +131,9 @@ const Index = () => {
         />
 
         {/* Main content */}
-        <div className="text-center p-8 z-10 max-w-3xl mx-auto relative">
+        <div className="text-center p-4 md:p-8 z-10 w-full max-w-3xl mx-auto relative">
           <motion.h1 
-            className="text-5xl md:text-7xl lg:text-8xl font-serif tracking-tight mb-6 text-secondary"
+            className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif tracking-tight mb-4 md:mb-6 text-secondary"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -144,32 +144,19 @@ const Index = () => {
           </motion.h1>
           
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-xl md:text-2xl text-gray-300 mt-8 flex flex-col items-center"
+            className="text-lg sm:text-xl md:text-2xl text-gray-300 mt-4 md:mt-8 flex flex-col items-center"
           >
-            <p className="mb-2">
-              One home to save
-            </p>
-            <div className="inline-block bg-black/60 backdrop-blur-sm border border-secondary/20 rounded-full px-6 py-2 mt-2">
-              <motion.span
-                key={currentText}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                {currentText}
-              </motion.span>
+            <p className="mb-2">One home to save</p>
+            <div className="inline-block bg-black/60 backdrop-blur-sm border border-secondary/20 rounded-full px-4 md:px-6 py-1 md:py-2 mt-2">
+              <motion.span>{currentText}</motion.span>
             </div>
           </motion.div>
           
-          <div className="mt-20 flex justify-center space-x-10">
+          <div className="mt-10 md:mt-20 flex flex-wrap justify-center gap-3 md:gap-10 px-2">
             {["Creative", "Professional", "Viral", "Engaging", "Results", "Captivating"].map((item, i) => (
               <motion.div 
                 key={i} 
-                className="text-gray-400 text-xs"
+                className="text-gray-400 text-[10px] md:text-xs"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + (i * 0.1), duration: 0.5 }}
@@ -181,10 +168,8 @@ const Index = () => {
         </div>
       </div>
       
-      {/* Add the 3D Carousel section */}
       <ThreeDPhotoCarouselDemo />
     </div>
   );
 };
-
 export default Index;

@@ -10,13 +10,12 @@ const toggleVariants = cva(
     variants: {
       variant: {
         default: "bg-transparent",
-        outline:
-          "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
+        outline: "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
       },
       size: {
-        default: "h-10 px-3",
-        sm: "h-9 px-2.5",
-        lg: "h-11 px-5",
+        default: "h-8 px-2 text-xs sm:h-9 sm:px-2.5 sm:text-sm md:h-10 md:px-3 md:text-base",
+        sm: "h-7 px-2 text-xs sm:h-8 sm:px-2.5 md:h-9 md:px-3",
+        lg: "h-9 px-3 text-sm sm:h-10 sm:px-4 md:h-11 md:px-5 md:text-base",
       },
     },
     defaultVariants: {
@@ -24,7 +23,7 @@ const toggleVariants = cva(
       size: "default",
     },
   }
-)
+);
 
 const Toggle = React.forwardRef<
   React.ElementRef<typeof TogglePrimitive.Root>,
