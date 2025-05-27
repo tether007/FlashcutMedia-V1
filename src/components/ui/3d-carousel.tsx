@@ -76,7 +76,7 @@ const keywords = [
 ]
 
 const videoUrls = [
-  "/videos/corousel_vid1.mp4",
+  "/corousel_vid1.mp4",
   "/videos/corousel_vid2.mp4",
   "/videos/corousel_vid3.mp4",
   "/videos/corousel_vid4.mp4",
