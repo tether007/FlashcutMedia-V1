@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
@@ -19,5 +18,6 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  assetsInclude: ['**/*.MOV'], // <-- Add this line
+  assetsInclude: ['**/*.mp4', '**/*.MOV', '**/*.webm', '**/*.avi'], // Add video formats
+  publicDir: 'public', // Ensure public directory is properly configured
 }));
