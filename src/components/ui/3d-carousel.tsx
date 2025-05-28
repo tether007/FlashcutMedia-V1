@@ -70,12 +70,12 @@ const keywords = [
 
 const videoUrls = [
   "/videos/corousel_vid1.mp4",
-  "/videos/corousel_vid2.mp4",
-  "/videos/corousel_vid3.mp4",
-  "/videos/corousel_vid4.mp4",
-  "/videos/corousel_vid6.mp4",
-  "/videos/corousel_vid7.mp4",
-  "/videos/corousel_vid8.mp4",
+  "/corousel_vid2.mp4",
+  "/corousel_vid3.mp4",
+  "/corousel_vid4.mp4",
+  "/corousel_vid6.mp4",
+  "/corousel_vid7.mp4",
+  "/corousel_vid8.mp4",
 ]
 
 const duration = 0.15
