@@ -119,14 +119,14 @@ const Index = () => {
         <FloatingImage 
           src={placeholder3} 
           alt="Performer with spotlight" 
-          className="w-64 h-80 bottom-[8%] left-[8%] z-10"
+          className="w-64 h-80 bottom-[8%] left-[8%] z-10 hidden md:block"
           sensitivity={90}
         />
         
         <FloatingImage 
           src={placeholder4} 
           alt="Outdoor performance" 
-          className="w-72 h-48 bottom-[10%] right-[8%] z-10 hidden md:block"
+          className="w-72 h-48 bottom-[10%] right-[8%] z-10"
           sensitivity={75}
         />
 
