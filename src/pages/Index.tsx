@@ -112,14 +112,14 @@ const Index = () => {
         <FloatingImage 
           src={placeholder2} 
           alt="Red stage lighting" 
-          className="w-72 h-48 top-[15%] right-[5%] z-10 "
+          className="w-72 h-48 top-[15%] right-[5%] z-10 hidden md:block"
           sensitivity={85}
         />
         
         <FloatingImage 
           src={placeholder3} 
           alt="Performer with spotlight" 
-          className="w-64 h-80 bottom-[8%] left-[8%] z-10 hidden md:block"
+          className="w-64 h-80 bottom-[8%] left-[8%] z-10"
           sensitivity={90}
         />
         
