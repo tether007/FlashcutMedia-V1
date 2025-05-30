@@ -66,6 +66,8 @@ const keywords = [
   "sunrise",
   "winter",
   "skyscraper",
+  "mountain", 
+  "forest", 
 ]
 
 const videoUrls = [
@@ -97,7 +99,7 @@ const Carousel = memo(
     videoUrls: string[]
   }) => {
     const isScreenSizeSm = useMediaQuery("(max-width: 640px)")
-    const cylinderWidth = isScreenSizeSm ? 800 : 1200
+    const cylinderWidth = isScreenSizeSm ? 900 : 1300
     const faceCount = cards.length
     const faceWidth = cylinderWidth / faceCount
     const radius = cylinderWidth / (2 * Math.PI)

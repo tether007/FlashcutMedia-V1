@@ -112,7 +112,7 @@ const Index = () => {
         <FloatingImage 
           src={placeholder2} 
           alt="Red stage lighting" 
-          className="w-72 h-48 top-[15%] right-[5%] z-10 hidden md:block"
+          className="w-72 h-48 top-[15%] right-[5%] z-10 "
           sensitivity={85}
         />
         
@@ -126,7 +126,7 @@ const Index = () => {
         <FloatingImage 
           src={placeholder4} 
           alt="Outdoor performance" 
-          className="w-72 h-48 bottom-[10%] right-[8%] z-10"
+          className="w-72 h-48 bottom-[10%] right-[8%] z-10 hidden md:block"
           sensitivity={75}
         />
 
@@ -155,12 +155,13 @@ const Index = () => {
           <div className="mt-10 md:mt-20 flex flex-wrap justify-center gap-3 md:gap-10 px-2">
             {["Creative", "Professional", "Viral", "Engaging", "Results", "Captivating"].map((item, i) => (
               <motion.div 
-                key={i} 
+                key={i}
                 className="text-gray-400 text-[10px] md:text-xs"
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + (i * 0.1), duration: 0.5 }}
-              >
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.2, duration: 0.6, ease: "easeOut" }}
+                >
                 {item}
               </motion.div>
             ))}
