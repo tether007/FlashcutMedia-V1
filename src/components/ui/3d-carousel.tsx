@@ -65,9 +65,7 @@ const keywords = [
   "sunset",
   "sunrise",
   "winter",
-  "skyscraper",
-  "mountain", 
-  "forest", 
+  "skyscraper", 
 ]
 
 const videoUrls = [
@@ -174,6 +172,7 @@ function ThreeDPhotoCarousel() {
   const [activeImg, setActiveImg] = useState<string | null>(null)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [isCarouselActive, setIsCarouselActive] = useState(true)
+  const [isPlaying, setIsPlaying] = useState(false);
   const controls = useAnimation()
   const cards = useMemo(
     () => keywords.map((keyword) => `https://picsum.photos/800/800?${keyword}`),
@@ -188,6 +187,7 @@ function ThreeDPhotoCarousel() {
     setActiveImg(imgUrl)
     setActiveIndex(index)
     setIsCarouselActive(false)
+    setIsPlaying(true) // Set playing to true immediately
     controls.stop()
   }
 
@@ -196,6 +196,18 @@ function ThreeDPhotoCarousel() {
     setActiveIndex(null)
     setIsCarouselActive(true)
   }
+
+  const handleVideoClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent closing the modal
+    const video = e.currentTarget as HTMLVideoElement;
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <div className="relative">
@@ -233,9 +245,13 @@ function ThreeDPhotoCarousel() {
                   display: "block",
                   margin: "0 auto",
                 }}
+                playsInline
                 autoPlay
-                controls
-                muted
+                onClick={handleVideoClick}
+                onContextMenu={(e) => e.preventDefault()}
+                controlsList="nodownload nofullscreen noremoteplayback"
+                disablePictureInPicture
+                controls={false}
               />
             </motion.div>
           </motion.div>

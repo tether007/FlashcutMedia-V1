@@ -35,14 +35,17 @@ interface FloatingImageProps {
   alt: string;
   className: string;
   sensitivity?: number;
+  mobilePosition?: string;
 }
 
-const FloatingImage = ({ src, alt, className, sensitivity = 50 }: FloatingImageProps) => {
+const FloatingImage = ({ src, alt, className, sensitivity = 50,mobilePosition }: FloatingImageProps) => {
   const { x, y } = useMousePosition();
+  
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight
   });
+  const isMobile = windowSize.width < 768;
 
   useEffect(() => {
     const handleResize = () => {
@@ -65,9 +68,9 @@ const FloatingImage = ({ src, alt, className, sensitivity = 50 }: FloatingImageP
       className={`absolute ${className}`}
       initial={{ y: 0 }}
       animate={{ 
-        x: moveX,
-        y: [moveY, moveY - 10, moveY, moveY + 10, moveY],
-        rotate: [0, 1, 0, -1, 0],
+        x: isMobile ? 0 : moveX,
+        y: [moveY, moveY - (isMobile ? 5 : 10), moveY, moveY + (isMobile ? 5 : 10), moveY],
+        rotate: [0, isMobile ? 0.5 : 1, 0, isMobile ? -0.5 : -1, 0],
       }}
       transition={{ 
         x: { type: "spring", stiffness: 50 },
@@ -78,7 +81,7 @@ const FloatingImage = ({ src, alt, className, sensitivity = 50 }: FloatingImageP
       <img 
         src={src} 
         alt={alt} 
-        className="object-cover shadow-lg h-full w-full" 
+        className="object-cover shadow-lg h-full w-full rounded-lg" 
       />
     </motion.div>
   );
@@ -105,7 +108,8 @@ const Index = () => {
         <FloatingImage 
           src={placeholder1} 
           alt="Concert stage" 
-          className="w-48 md:w-72 h-32 md:h-48 top-[10%] left-[5%] z-10 "
+          className="w-48 md:w-72 h-32 md:h-48 top-[10%] left-[5%] z-10 hidden md:block"  
+          mobilePosition="top-[5%] left-[5%] md:top-[10%] md:left-[5%]"
           sensitivity={70}
         />
         
@@ -113,20 +117,23 @@ const Index = () => {
           src={placeholder2} 
           alt="Red stage lighting" 
           className="w-72 h-48 top-[15%] right-[5%] z-10 "
+          mobilePosition="top-[5%] right-[5%] md:top-[15%] md:right-[5%]"
           sensitivity={85}
         />
         
         <FloatingImage 
           src={placeholder3} 
           alt="Performer with spotlight" 
-          className="w-64 h-80 bottom-[8%] left-[8%] z-10 hidden md:block"
+          className="w-64 h-80 bottom-[8%] left-[8%] z-10 hidden md:block"  
+          mobilePosition="bottom-[45%] left-[5%] md:bottom-[8%] md:left-[8%] "
           sensitivity={90}
         />
         
         <FloatingImage 
           src={placeholder4} 
           alt="Outdoor performance" 
-          className="w-72 h-48 bottom-[10%] right-[8%] z-10 hidden md:block"
+          className="w-72 h-48 bottom-[10%] right-[8%] z-10 "
+          mobilePosition="bottom-[5%] right-[5%] md:bottom-[10%] md:right-[8%]"
           sensitivity={75}
         />
 
