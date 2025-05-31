@@ -1,9 +1,8 @@
-
 import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel";
 import { useRef } from "react";
 // Fixed import from framer-motion - these are now declared in the types/webgl.d.ts file
 import { useScroll, motion, useTransform } from "framer-motion";
-import carouselImage from "@/assets/images/carousel1.jpg";
+
 
 export function ThreeDPhotoCarouselDemo() {
   const containerRef = useRef<HTMLDivElement>(null);
