@@ -1,6 +1,6 @@
 "use client"
 
-import { memo, useEffect, useLayoutEffect, useMemo, useState } from "react"
+import { memo, useEffect, useLayoutEffect, useMemo, useState, useRef } from "react"
 import {
   AnimatePresence,
   motion,
@@ -58,25 +58,28 @@ export function useMediaQuery(
   return matches
 }
 
-const keywords = [
-  "night",
-  "city",
-  "sky",
-  "sunset",
-  "sunrise",
-  "winter",
-  "skyscraper", 
+const thumbnails = [
+  "/thumbnails/thumbnail_1.png",
+  "/thumbnails/thumbnail_2.png",
+  "/thumbnails/thumbnail_3.png",
+  "/thumbnails/thumbnail_6.png",
+  "/thumbnails/thumbnail_4.png",
+  "/thumbnails/thumbnail_7.png",
+  "/thumbnails/thumbnail_8.png",
 ]
 
 const videoUrls = [
   "/videos/corousel_vid1.mp4",
-  "/corousel_vid2.mp4",
-  "/corousel_vid3.mp4",
-  "/corousel_vid4.mp4",
-  "/corousel_vid6.mp4",
-  "/corousel_vid7.mp4",
-  "/corousel_vid8.mp4",
-]
+  "/videos/corousel_vid2.mp4",
+  "/videos/corousel_vid3.mp4",
+  "/videos/corousel_vid4.mp4",
+  "/videos/corousel_vid6.mp4",
+  "/videos/corousel_vid_1.mp4",
+  "/videos/corousel_vid8.mp4",
+].map(url => ({
+  high: url,
+  low: url.replace('.mp4', '-low.mp4')
+}));
 
 const duration = 0.15
 const transition = { duration, ease: [0.32, 0.72, 0, 1] }
@@ -94,7 +97,7 @@ const Carousel = memo(
     controls: any
     cards: string[]
     isCarouselActive: boolean
-    videoUrls: string[]
+    videoUrls: { high: string; low: string }[]
   }) => {
     const isScreenSizeSm = useMediaQuery("(max-width: 640px)")
     const cylinderWidth = isScreenSizeSm ? 900 : 1300
@@ -174,15 +177,18 @@ function ThreeDPhotoCarousel() {
   const [isCarouselActive, setIsCarouselActive] = useState(true)
   const [isPlaying, setIsPlaying] = useState(false);
   const controls = useAnimation()
-  const cards = useMemo(
-    () => keywords.map((keyword) => `https://picsum.photos/800/800?${keyword}`),
-    []
-  )
+  const [isBuffering, setIsBuffering] = useState(true);
+  const [isMobile] = useState(() => window.innerWidth < 768);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    console.log("Cards loaded:", cards)
-  }, [cards])
+  const cards = useMemo(() => thumbnails, [])
 
+  const preloadVideo = (index: number) => {
+    const video = new Audio();
+    video.preload = 'metadata';
+    video.src = isMobile ? videoUrls[index].low : videoUrls[index].high;
+  };
+  
   const handleClick = (imgUrl: string, index: number) => {
     setActiveImg(imgUrl)
     setActiveIndex(index)
@@ -232,8 +238,17 @@ function ThreeDPhotoCarousel() {
                 ease: [0.25, 0.1, 0.25, 1],
               }}
             >
+              {isBuffering && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                  <div className="w-8 h-8 border-4 border-white/50 border-t-white rounded-full animate-spin" />
+                </div>
+              )}
               <video
-                src={videoUrls[activeIndex % videoUrls.length]}
+                ref={videoRef}
+                src={isMobile ? 
+                  videoUrls[activeIndex % videoUrls.length].low : 
+                  videoUrls[activeIndex % videoUrls.length].high
+                }
                 className="w-full h-full object-contain rounded-xl bg-black"
                 style={{
                   width: "100%",
@@ -247,11 +262,23 @@ function ThreeDPhotoCarousel() {
                 }}
                 playsInline
                 autoPlay
+                preload="auto"
                 onClick={handleVideoClick}
                 onContextMenu={(e) => e.preventDefault()}
                 controlsList="nodownload nofullscreen noremoteplayback"
                 disablePictureInPicture
                 controls={false}
+                onWaiting={() => setIsBuffering(true)}
+                onCanPlay={() => {
+                  setIsBuffering(false);
+                  // Preload next video
+                  const nextIndex = (activeIndex + 1) % videoUrls.length;
+                  preloadVideo(nextIndex);
+                }}
+                onError={(e) => {
+                  console.error('Video Error:', e);
+                  setIsBuffering(false);
+                }}
               />
             </motion.div>
           </motion.div>
