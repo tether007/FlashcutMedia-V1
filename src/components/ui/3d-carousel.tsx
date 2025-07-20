@@ -61,19 +61,18 @@ export function useMediaQuery(
 
 
 const videoUrls = [
-   "/videos/corousel_vid1.mp4",
+ "/videos/corousel_vid1.mp4",
   "/videos/corousel_vid2.mp4",
   "/videos/corousel_vid3.mp4",
   "/videos/corousel_vid4.mp4",
   "/videos/corousel_vid6.mp4",
   "/videos/corousel_vid_1.mp4",
-  "/videos/corousel_vid8.mp4",
-
+  "/videos/corousel_vid8.mp4"
 ]
 
 // ADD YOUR CUSTOM THUMBNAILS HERE
 const customThumbnails = [
-  "/thumbnails/thumbnail_1.png",
+ "/thumbnails/thumbnail_1.png",
   "/thumbnails/thumbnail_2.png",
   "/thumbnails/thumbnail_3.png",
   "/thumbnails/thumbnail_6.png",
@@ -178,10 +177,31 @@ function ThreeDPhotoCarousel() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [isCarouselActive, setIsCarouselActive] = useState(true)
   const [isPlaying, setIsPlaying] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [preloadedVideos, setPreloadedVideos] = useState<Set<string>>(new Set());
   const controls = useAnimation()
   
   // Use custom thumbnails only
   const cards = useMemo(() => customThumbnails, [])
+
+  // Preload videos for smoother playback
+  useEffect(() => {
+    const preloadVideo = (src: string) => {
+      if (preloadedVideos.has(src)) return;
+      
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      video.src = src;
+      video.load();
+      
+      video.addEventListener('canplaythrough', () => {
+        setPreloadedVideos(prev => new Set([...prev, src]));
+      });
+    };
+
+    // Preload first 3 videos for better initial experience
+    videoUrls.slice(0, 3).forEach(preloadVideo);
+  }, []);
 
   useEffect(() => {
     console.log("Cards loaded:", cards)
@@ -191,7 +211,8 @@ function ThreeDPhotoCarousel() {
     setActiveImg(imgUrl)
     setActiveIndex(index)
     setIsCarouselActive(false)
-    setIsPlaying(true) // Set playing to true immediately
+    setVideoLoaded(false)
+    setIsPlaying(false) // Start with paused state until loaded
     controls.stop()
   }
 
@@ -199,18 +220,38 @@ function ThreeDPhotoCarousel() {
     setActiveImg(null)
     setActiveIndex(null)
     setIsCarouselActive(true)
+    setVideoLoaded(false)
+    setIsPlaying(false)
   }
 
   const handleVideoClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent closing the modal
+    e.stopPropagation();
     const video = e.currentTarget as HTMLVideoElement;
+    
+    if (!videoLoaded) return; // Don't allow interaction until loaded
+    
     if (video.paused) {
-      video.play();
+      video.play().catch(console.error);
       setIsPlaying(true);
     } else {
       video.pause();
       setIsPlaying(false);
     }
+  };
+
+  const handleVideoLoad = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+    const video = e.currentTarget;
+    setVideoLoaded(true);
+    
+    // Auto-play once loaded
+    video.play().then(() => {
+      setIsPlaying(true);
+    }).catch(console.error);
+  };
+
+  const handleVideoError = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+    console.error('Video failed to load:', e);
+    setVideoLoaded(true); // Still allow interaction
   };
 
   return (
@@ -237,6 +278,7 @@ function ThreeDPhotoCarousel() {
               }}
             >
               <video
+                key={`video-${activeIndex}`}
                 src={videoUrls[activeIndex % videoUrls.length]}
                 className="w-full h-full object-contain rounded-xl bg-black"
                 style={{
@@ -248,15 +290,25 @@ function ThreeDPhotoCarousel() {
                   background: "black",
                   display: "block",
                   margin: "0 auto",
+                  opacity: videoLoaded ? 1 : 0.7,
+                  transition: "opacity 0.3s ease"
                 }}
                 playsInline
-                autoPlay
+                muted={false}
+                preload="auto"
                 onClick={handleVideoClick}
+                onLoadedData={handleVideoLoad}
+                onError={handleVideoError}
                 onContextMenu={(e) => e.preventDefault()}
                 controlsList="nodownload nofullscreen noremoteplayback"
                 disablePictureInPicture
                 controls={false}
               />
+              {!videoLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-xl">
+                  <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              )}
             </motion.div>
           </motion.div>
         )}
