@@ -1,20 +1,43 @@
-# Define paths and settings
-$inputFile = ".\public\videos\corousel_vid3.mp4"
-$outputFile = ".\public\videos\corousel_vid3-low.mp4"
-$ffmpeg = "ffmpeg"  # Ensure FFmpeg is installed and in PATH
+$problematicVideos = @(
+    "corousel_vid2.mp4",
+    "corousel_vid4.mp4",
+    "corousel_vid6.mp4"
+)
 
-# Check if file exists
-if (Test-Path $inputFile) {
-    # Run FFmpeg to create a mobile-optimized version
-    & $ffmpeg -i $inputFile `
-        -vf "scale=480:trunc(ow/a/2)*2" `
+# Get the absolute path to the videos directory
+$projectRoot = Split-Path -Parent (Split-Path -Parent $PSCommandPath)
+$inputPath = Join-Path $projectRoot "public\videos"
+
+Write-Host "Looking for videos in: $inputPath"
+
+foreach ($video in $problematicVideos) {
+    $inputFile = Join-Path $inputPath $video
+    $outputFile = Join-Path $inputPath ($video -replace '.mp4$', '-optimized.mp4')
+    
+    if (-not (Test-Path $inputFile)) {
+        Write-Host "Error: Could not find video file: $inputFile"
+        continue
+    }
+    
+    Write-Host "Processing $video..."
+    
+    # Re-encode with web-safe settings
+    ffmpeg -y -i $inputFile `
         -c:v libx264 `
-        -preset fast `
-        -crf 28 `
-        -c:a aac `
-        -b:a 96k `
+        -profile:v baseline `
+        -level 3.0 `
+        -preset medium `
+        -crf 23 `
         -movflags +faststart `
+        -pix_fmt yuv420p `
+        -c:a aac `
+        -b:a 128k `
+        -ar 44100 `
         $outputFile
-} else {
-    Write-Host "File not found: $inputFile"
+
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Successfully processed $video"
+    } else {
+        Write-Host "Error processing $video"
+    }
 }
