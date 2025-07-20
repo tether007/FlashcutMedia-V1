@@ -61,16 +61,18 @@ export function useMediaQuery(
 
 
 const videoUrls = [
- "/videos/corousel_vid1.mp4",
-  "/videos/corousel_vid2.mp4",
+  "/videos/corousel_vid1.mp4",
+  "/videos/corousel_vid2-compressed.mp4",
   "/videos/corousel_vid3.mp4",
-  "/videos/corousel_vid4.mp4",
-  "/videos/corousel_vid6.mp4",
+  "/videos/corousel_vid4-compressed.mp4",
+  "/videos/corousel_vid6-compressed.mp4",
   "/videos/corousel_vid_1.mp4",
   "/videos/corousel_vid8.mp4"
-]
+].map(url => ({
+  url,
+  fallback: url.replace('.mp4', '-fallback.mp4')
+}));
 
-// ADD YOUR CUSTOM THUMBNAILS HERE
 const customThumbnails = [
  "/thumbnails/thumbnail_1.png",
   "/thumbnails/thumbnail_2.png",
@@ -200,7 +202,7 @@ function ThreeDPhotoCarousel() {
     };
 
     // Preload first 3 videos for better initial experience
-    videoUrls.slice(0, 3).forEach(preloadVideo);
+    videoUrls.slice(0, 3).forEach(video => preloadVideo(video.url));
   }, []);
 
   useEffect(() => {
@@ -279,7 +281,7 @@ function ThreeDPhotoCarousel() {
             >
               <video
                 key={`video-${activeIndex}`}
-                src={videoUrls[activeIndex % videoUrls.length]}
+                src={videoUrls[activeIndex % videoUrls.length].url}
                 className="w-full h-full object-contain rounded-xl bg-black"
                 style={{
                   width: "100%",
@@ -319,7 +321,7 @@ function ThreeDPhotoCarousel() {
           controls={controls}
           cards={cards}
           isCarouselActive={isCarouselActive}
-          videoUrls={videoUrls}
+          videoUrls={videoUrls.map(v => v.url)}
         />
       </div>
     </div>
