@@ -140,7 +140,7 @@ const Index = () => {
         {/* Main content */}
         <div className="text-center p-4 md:p-8 z-10 w-full max-w-3xl mx-auto relative">
           <motion.h1 
-            className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif tracking-tight mb-4 md:mb-6 text-secondary"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-ethnocentric tracking-tight mb-4 md:mb-6 text-secondary"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -155,7 +155,7 @@ const Index = () => {
           >
             <p className="mb-2">One home to save</p>
             <div className="inline-block bg-black/60 backdrop-blur-sm border border-secondary/20 rounded-full px-4 md:px-6 py-1 md:py-2 mt-2">
-              <motion.span>{currentText}</motion.span>
+              <motion.span className="font-ethnocentric">{currentText}</motion.span>
             </div>
           </motion.div>
           

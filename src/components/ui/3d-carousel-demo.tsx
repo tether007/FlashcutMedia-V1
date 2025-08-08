@@ -29,7 +29,7 @@ export function ThreeDPhotoCarouselDemo() {
       >
         <div className="relative overflow-hidden rounded-lg p-4">
           <div className="mb-8">
-            <h2 className="text-3xl md:text-4xl font-serif text-black dark:text-white text-center mb-4">Our Projects</h2>
+            <h2 className="text-2xl md:text-3xl font-font-ethnocentric text-black dark:text-white text-center mb-4">Our Projects</h2>
             <p className="text-lg text-gray-700 dark:text-gray-300 text-center max-w-2xl mx-auto">
               Explore our portfolio of Captured moments. Drag the carousel to browse or click on an item to view few videos.
             </p>

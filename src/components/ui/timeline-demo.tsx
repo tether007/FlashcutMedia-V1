@@ -8,7 +8,7 @@ export function TimelineDemo() {
       title: "2025",
       content: (
         <div>
-          <p className="text-black dark:text-white text-xs md:text-sm font-normal mb-8">
+          <p className="text-black dark:text-white text-xs md:text-sm font-[Ethnocentric] mb-8">
             Partnered with Decathlon to produce a video for their childeren's sportswear and event called "Kids Day Out".
           </p>
           <div className="grid grid-cols-2 gap-4">
