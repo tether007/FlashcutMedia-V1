@@ -41,3 +41,16 @@
   color: #888;
 }
 
+@media screen and (max-width: 768px) {
+  
+  .navbar {
+        padding: 5px 10px;  /* less vertical & horizontal padding */
+    }
+  .navbar-brand img {
+        max-height: 35px; /* smaller logo */
+  }
+  .navbar-nav .nav-link {
+        font-size: 14px; /* smaller text */
+        padding: 5px 8px;
+  }
+}
