@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -9,9 +8,11 @@ export function ThemeToggle() {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    // Initialize theme from localStorage or system preference
-    const savedTheme = localStorage.getItem("theme") || 
-      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const savedTheme =
+      localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light");
     setTheme(savedTheme);
     document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
@@ -24,15 +25,21 @@ export function ThemeToggle() {
   };
 
   return (
-    <div className="flex items-center space-x-2 bg-white/20 dark:bg-gray-800/30 p-2 rounded-full backdrop-blur-sm border border-white/20">
-      <Switch 
+    <div
+      className="flex items-center space-x-1 sm:space-x-2 
+                 bg-white/20 dark:bg-gray-800/30 
+                 p-1 sm:p-2 rounded-full 
+                 backdrop-blur-sm border border-white/20"
+    >
+      <Switch
+        className="scale-75 sm:scale-100" // smaller switch on mobile
         checked={theme === "dark"}
         onCheckedChange={toggleTheme}
       />
       {theme === "dark" ? (
-        <Moon className="h-4 w-4 text-gray-200" />
+        <Moon className="h-3 w-3 sm:h-4 sm:w-4 text-gray-200" />
       ) : (
-        <Sun className="h-4 w-4 text-gray-700" />
+        <Sun className="h-3 w-3 sm:h-4 sm:w-4 text-gray-700" />
       )}
     </div>
   );

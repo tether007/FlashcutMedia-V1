@@ -38,7 +38,8 @@ interface FloatingImageProps {
   mobilePosition?: string;
 }
 
-const FloatingImage = ({ src, alt, className, sensitivity = 50,mobilePosition }: FloatingImageProps) => {
+// Add this CSS in your Tailwind classes or styles
+const FloatingImage = ({ src, alt, className, sensitivity = 50, mobilePosition }: FloatingImageProps) => {
   const { x, y } = useMousePosition();
   
   const [windowSize, setWindowSize] = useState({
@@ -54,23 +55,22 @@ const FloatingImage = ({ src, alt, className, sensitivity = 50,mobilePosition }:
         height: window.innerHeight
       });
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Calculate movement based on mouse position relative to window center
   const moveX = ((x - windowSize.width / 2) / windowSize.width) * sensitivity;
   const moveY = ((y - windowSize.height / 2) / windowSize.height) * sensitivity;
 
   return (
     <motion.div
-      className={`absolute ${className}`}
+      className={`absolute ${className} ${isMobile ? "opacity-20" : ""} ${isMobile ? "pointer-events-none" : ""}`} 
+      style={isMobile ? { filter: "blur(2px)" } : {}}
       initial={{ y: 0 }}
       animate={{ 
         x: isMobile ? 0 : moveX,
-        y: [moveY, moveY - (isMobile ? 5 : 10), moveY, moveY + (isMobile ? 5 : 10), moveY],
-        rotate: [0, isMobile ? 0.5 : 1, 0, isMobile ? -0.5 : -1, 0],
+        y: [moveY, moveY - (isMobile ? 2 : 10), moveY, moveY + (isMobile ? 2 : 10), moveY],
+        rotate: [0, isMobile ? 0 : 1, 0, isMobile ? 0 : -1, 0],
       }}
       transition={{ 
         x: { type: "spring", stiffness: 50 },
@@ -86,6 +86,7 @@ const FloatingImage = ({ src, alt, className, sensitivity = 50,mobilePosition }:
     </motion.div>
   );
 };
+
 
 const Index = () => {
   const [currentText, setCurrentText] = useState("photos");
