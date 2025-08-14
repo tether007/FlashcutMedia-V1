@@ -62,10 +62,10 @@ export function useMediaQuery(
 
 const videoUrls = [
   "/videos/corousel_vid1.mp4",
-  "/videos/corousel_vid2-compressed.mp4",
+  "/videos/corousel_vid_2.mp4",
   "/videos/corousel_vid3.mp4",
-  "/videos/corousel_vid4-compressed.mp4",
-  "/videos/corousel_vid6-compressed.mp4",
+  "/videos/corousel_vid4.mp4",
+  "/videos/corousel_vid6.mp4",
   "/videos/corousel_vid_1.mp4",
   "/videos/corousel_vid8.mp4"
 ].map(url => ({
